@@ -1,0 +1,13 @@
+{
+  "name": "cypress-todomvc-qa-final",
+  "version": "1.0.0",
+  "scripts": {
+    "start-server": "npx http-server ./public -p 8080",
+    "test": "start-server-and-test start-server http://localhost:8080 cypress run"
+  },
+  "devDependencies": {
+    "cypress": "^13.7.3",
+    "http-server": "^14.1.1",
+    "start-server-and-test": "^2.0.0"
+  }
+}
