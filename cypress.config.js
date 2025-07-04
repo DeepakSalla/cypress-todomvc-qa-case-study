@@ -1,11 +1,12 @@
-const { defineConfig } = require("cypress");
-
-module.exports = defineConfig({
+module.exports = {
   e2e: {
-    baseUrl: "http://localhost:8080",
-    specPattern: "cypress/e2e/**/*.cy.js",
-    supportFile: false,
-    screenshotOnRunFailure: true,
-    video: true
-  },
-});
+    setupNodeEvents(on, config) {
+      on('task', {
+        log(message) {
+          console.log(message)
+          return null
+        }
+      })
+    }
+  }
+}
