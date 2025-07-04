@@ -1,14 +1,62 @@
 {
   "name": "cypress-todomvc-qa-final",
   "version": "1.0.0",
+  "description": "Cypress tests for TodoMVC React app",
   "scripts": {
-  "start-server": "http-server public -p 8080 -s",
-  "test": "cypress run",
-  "ci": "start-server-and-test start-server http://localhost:8080 test"
-},
+    "start": "react-scripts start",
+    "start-server": "http-server public -p 8080 -s",
+    "build": "react-scripts build",
+    "test": "cypress run",
+    "test:open": "cypress open",
+    "ci": "start-server-and-test start-server http://localhost:8080 test",
+    "pretest": "npm run build",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "todomvc-app-css": "^2.4.2"
+  },
   "devDependencies": {
-    "cypress": "^13.7.3",
+    "@testing-library/cypress": "^10.0.3",
+    "cypress": "^13.6.0",
+    "eslint": "^8.56.0",
+    "eslint-plugin-cypress": "^2.13.3",
     "http-server": "^14.1.1",
-    "start-server-and-test": "^2.0.0"
+    "prettier": "^3.2.4",
+    "start-server-and-test": "^2.0.0",
+    "typescript": "^5.3.3"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DeepakSalla/cypress-todomvc-qa-case-study.git"
+  },
+  "keywords": [
+    "cypress",
+    "todomvc",
+    "testing"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DeepakSalla/cypress-todomvc-qa-case-study/issues"
+  },
+  "homepage": "https://github.com/DeepakSalla/cypress-todomvc-qa-case-study#readme",
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": true
   }
 }

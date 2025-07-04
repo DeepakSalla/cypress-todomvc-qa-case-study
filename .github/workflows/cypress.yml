@@ -5,29 +5,50 @@ jobs:
   cypress-run:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      
-      - name: Setup Node
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
-      
+          cache: 'npm'
+
+      - name: Check for package-lock.json
+        id: lockfile-check
+        run: |
+          if [ -f package-lock.json ]; then
+            echo "lockfile_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "::warning::No package-lock.json found. Generating one..."
+            npm install --package-lock-only
+            git config --global user.name "GitHub Actions"
+            git config --global user.email "actions@github.com"
+            git add package-lock.json
+            git commit -m "Auto-generated package-lock.json" || echo "No changes to commit"
+          fi
+
       - name: Install dependencies
-        run: npm ci
-      
-      - name: Run Cypress tests
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      - name: Start server and run tests
         run: npm run ci
         env:
           CI: true
-      
-      - name: Upload Cypress screenshots
+
+      - name: Upload screenshots (on failure)
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: cypress-screenshots
           path: cypress/screenshots
-      
-      - name: Upload Cypress videos
+
+      - name: Upload videos
         uses: actions/upload-artifact@v4
         with:
           name: cypress-videos
